@@ -1,0 +1,88 @@
+<?php
+// index.php - Dashboard
+include 'includes/db.php';
+include 'includes/header.php';
+?>
+
+<div class="container mt-4">
+  <h1>Admin Dashboard</h1>
+  <div class="row">
+    <div class="col-md-3">
+      <div class="card text-white bg-primary mb-3">
+        <div class="card-body">
+          <h5 class="card-title">Total Students</h5>
+          <?php
+          $result = $conn->query("SELECT COUNT(*) AS count FROM students");
+          echo "<p class='card-text'>" . $result->fetch_assoc()['count'] . "</p>";
+          ?>
+        </div>
+      </div>
+    </div>
+    <!-- Add more cards for teachers, results, etc. -->
+  </div>
+</div>
+
+<?php include 'includes/footer.php'; ?>
+
+<?php
+// includes/db.php
+$host = "localhost";
+$user = "root";
+$pass = "";
+$db = "school_db";
+
+$conn = new mysqli($host, $user, $pass, $db);
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+?>
+
+<?php
+// students/add.php
+include '../includes/db.php';
+include '../includes/header.php';
+?>
+
+<div class="container mt-4">
+  <h2>Add New Student</h2>
+  <form method="POST" action="">
+    <div class="form-group">
+      <label>First Name</label>
+      <input name="first_name" class="form-control" required>
+    </div>
+    <div class="form-group">
+      <label>Last Name</label>
+      <input name="last_name" class="form-control" required>
+    </div>
+    <div class="form-group">
+      <label>Gender</label>
+      <select name="gender" class="form-control">
+        <option>Male</option>
+        <option>Female</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Date of Birth</label>
+      <input type="date" name="dob" class="form-control">
+    </div>
+    <div class="form-group">
+      <label>Class</label>
+      <input name="class_id" class="form-control">
+    </div>
+    <button type="submit" name="submit" class="btn btn-primary mt-2">Add Student</button>
+  </form>
+</div>
+
+<?php
+if (isset($_POST['submit'])) {
+    $stmt = $conn->prepare("INSERT INTO students (first_name, last_name, gender, dob, class_id) VALUES (?, ?, ?, ?, ?)");
+    $stmt->bind_param("ssssi", $_POST['first_name'], $_POST['last_name'], $_POST['gender'], $_POST['dob'], $_POST['class_id']);
+    if ($stmt->execute()) {
+        echo "<script>alert('Student added successfully');</script>";
+    } else {
+        echo "<script>alert('Error adding student');</script>";
+    }
+}
+
+include '../includes/footer.php';
+?>

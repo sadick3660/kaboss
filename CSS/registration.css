@@ -1,0 +1,58 @@
+body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+   
+}
+form{
+    padding:1.5rem;
+    background-color: rgb(255, 255, 255);
+    box-shadow:0 20px 35px rgb(0, 0, 1,6);
+    border-radius: 60px;
+    width: 400px;
+    margin: 50px auto; 
+}
+button{
+    background-color: aqua;
+    padding: 3px;
+
+}
+h1{
+    color: aliceblue;
+}
+.h2{
+    color: rgb(5, 5, 5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+
+}
+input{
+    border-radius: 30px;
+}
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+input[type="Address"],
+input[type="varch"],
+textarea{
+    padding: 5px;
+    border: 1px solid #393b3b;
+    background-color:hwb(240 99% 1% / 0.836);
+    margin-bottom: -10px;
+    width: 100%;
+    border-radius:10px;
+}
+title{
+    color: #000000;
+}
+input[type="button"]:hover{
+    background-color: #094d1f;
+}
+.course_selection{
+    padding: 10px;
+    width: 30px;
+}

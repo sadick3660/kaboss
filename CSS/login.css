@@ -1,0 +1,52 @@
+body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+   background-image:url("salim.png");
+}
+form{
+    padding: 30px;
+    border: 10px solid #111111;
+    background-color: rgb(243, 236, 236);
+    box-shadow: #00000077;
+    border-radius: 60px;
+    width: 100%;
+    
+}
+button{
+    background-color: aqua;
+    padding:3px;
+}
+.h2{
+    color:rgb(5, 5, 5);
+    display:flex;
+    justify-content: center;
+    align-items:center;
+}
+input{
+    border-radius: 30px;
+}
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+input[type="Address"],
+input[type="varch"],
+textarea{
+    padding: 5px;
+    border: 1px solid #393b3b;
+    background-color:hex(240 99% 1% / 0.836);
+    margin-bottom:-10px;
+    width: 100%;
+    border-radius:10px;
+}
+title{
+    color: #000000;
+}
+.success{
+    border: 10px;
+    border-radius: 20px;
+    box-shadow: 10px;
+    
+}

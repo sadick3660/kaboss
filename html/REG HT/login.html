@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Form</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-image: url("salim.png");
+            background-size: cover;
+            background-position: center;
+        }
+        form {
+            padding: 1.5rem;
+            background-color: #fff;
+            box-shadow: 0 6px 3px rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+            width: 350px;
+        }
+        button {
+            background-color: rgb(56, 172, 172);
+            padding: 10px;
+            width: 100%;
+            border-radius: 10px;
+            border: none;
+            color: white;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: rgb(46, 152, 152);
+            cursor: pointer;
+        }
+        input {
+            border-radius: 5px;
+            padding: 10px;
+            width: 100%;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+        }
+        .link {
+            text-align: center;
+            margin-top: 10px;
+        }
+        .link a {
+            text-decoration: none;
+            color: rgb(56, 172, 172);
+        }
+        .error-message {
+            color: red;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h1 style="text-align: center;">RESULT SYSTEM</h1>
+        <form method="POST" action="login.php">
+            <div class="form">
+                <h2 style="text-align: center;">LOGIN FORM</h2>
+                
+                <!-- Display error messages -->
+           
+
+                <input type="text" name="username" placeholder="Enter Username" required>
+                <input type="password" name="password" placeholder="Enter Password" required>
+
+                <button type="submit">Login</button>
+                
+                <div class="link">
+                    <p><a href="resete passwor.html">Recover password</a></p>
+                </div>
+                <p style="text-align: center;">Don't have an account? <a href="registeration form.html">Register</a></p>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
+
+
+
+
+<?php
+include "conn.php";
+session_start();
+
+$error_message = ""; // Variable to store error messages
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $username = trim($_POST['username']);
+    $password = trim($_POST['password']);
+
+    if (!empty($username) && !empty($password)) {
+        // Use prepared statements to prevent SQL injection
+        $stmt = $conn->prepare("SELECT * FROM Students_registration WHERE User_name = ?");
+        $stmt->bind_param("s", $username);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        if ($result->num_rows > 0) {
+            $user = $result->fetch_assoc();
+
+            // Verify the password
+            if (password_verify($password, $user['Password'])) {
+                // Prevent session fixation
+                session_regenerate_id(true);
+
+                // Store user data in session
+                $_SESSION["First_name"] = $user["First_name"];
+
+                // Redirect to dashboard
+                header("Location: dashboard.php");
+                exit();
+            } else {
+                $error_message = "Invalid username or password!";
+            }
+        } else {
+            $error_message = "Invalid username or password!";
+        }
+
+        $stmt->close();
+    } else {
+        $error_message = "Please fill in all fields.";
+    }
+}
+
+$conn->close();
+?>
